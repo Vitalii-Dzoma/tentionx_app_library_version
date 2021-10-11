@@ -1,0 +1,31 @@
+* {
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  line-height: 19.6px;
+}
+
+.MuiAppBar-root.MuiAppBar-colorPrimary {
+  color: grey;
+  background-color: aliceblue ;
+}
+
+.MuiSelect-select.MuiSelect-select {
+
+  text-transform: uppercase;
+  color: grey;
+  background: transparent;
+  font-weight: 700;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.MuiInput-underline:before, .MuiInput-underline:after  {
+  border-bottom: transparent !important;
+}
+
+.MuiInput-root {
+  width: 200px;
+}
+
+.css-a88p61-MuiInputBase-root-MuiInput-root {
+  width:120px;
+}
