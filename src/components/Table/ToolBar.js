@@ -1,8 +1,8 @@
-import { Button, Toolbar, Typography } from '@mui/material';
+import {Button, Toolbar, Typography} from '@mui/material';
 import React from 'react'
 import PropTypes from "prop-types"
-import { ArchiveOutlined, CloseRounded, UploadOutlined } from '@mui/icons-material';
-import { makeStyles } from '@mui/styles';
+import {ArchiveOutlined, CloseRounded, UploadOutlined} from '@mui/icons-material';
+import {makeStyles} from '@mui/styles';
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
   }
 }))
 const ToolBar = (props) => {
-  const { numSelected, setSelected } = props;
+  const {numSelected, setSelected} = props;
   const s = useStyle()
 
   return (
@@ -31,26 +31,27 @@ const ToolBar = (props) => {
         }),
       }}
     >
-        <Typography
-          sx={{ flex: '1 1 100%', fontFamily: 'inherit', fontWeight: 700, color: 'white', textTransform: 'uppercase' }}
-          color="inherit"
+      <Typography
+        sx={{flex: '1 1 100%', fontFamily: 'inherit', fontWeight: 700, color: 'white', textTransform: 'uppercase'}}
+        color="inherit"
         variant="subtitle1"
         component="span"
-        >
-          {numSelected} {numSelected > 1 ? 'students' : 'student'} selected
-        </Typography>
+      >
+        {numSelected} {numSelected > 1 ? 'students' : 'student'} selected
+      </Typography>
       <div className={s.container}>
-        <Button className={s.button} sx={{ color: '#ffffff' }} startIcon={<CloseRounded />} onClick={() => setSelected([])}>cancel selection</Button>
-        <Button className={s.button} sx={{ color: '#ffffff'}} startIcon={<UploadOutlined/>}>export csv</Button>
-        <Button className={s.button} sx={{ color: '#424242'}} startIcon={<ArchiveOutlined/>}>archive selected</Button>
-        </div>
+        <Button className={s.button} sx={{color: '#ffffff'}} startIcon={<CloseRounded/>}
+                onClick={() => setSelected([])}>cancel selection</Button>
+        <Button className={s.button} sx={{color: '#ffffff'}} startIcon={<UploadOutlined/>}>export csv</Button>
+        <Button className={s.button} sx={{color: '#424242'}} startIcon={<ArchiveOutlined/>}>archive selected</Button>
+      </div>
     </Toolbar>
   );
 }
-//
-// ToolBar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
+
+ToolBar.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+};
 
 
 export default ToolBar
