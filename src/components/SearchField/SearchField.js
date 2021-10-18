@@ -7,7 +7,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 const SearchField = () => {
   return (
     <div className={s.searchfield}>
-      <Typography sx={{textTransform: 'uppercase', fontWeight: 700, fontSize: '20px', lineHeight: '24px', fontFamily: 'inherit'}}>Students</Typography>
+      <Typography sx={{ textTransform: 'uppercase', fontWeight: 700, fontSize: '20px', lineHeight: '24px', fontFamily: 'inherit', color: "#5B5B5B"}}>Students</Typography>
       <Input
         sx={{width: '499px', background: '#F2F2F2', padding: '6px 12px'}}
         variant="filled"

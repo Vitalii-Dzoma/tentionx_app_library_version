@@ -10,7 +10,6 @@
 }
 
 .MuiSelect-select.MuiSelect-select {
-
   text-transform: uppercase;
   color: grey;
   background: transparent;
@@ -23,9 +22,13 @@
 }
 
 .MuiInput-root {
-  width: 200px;
+  width: 175px;
 }
 
-.css-a88p61-MuiInputBase-root-MuiInput-root {
-  width:120px;
+.MuiToolbar-root {
+  min-height: 57px !important;
+}
+
+.MuiTableCell-root p {
+  margin: 0;
 }
