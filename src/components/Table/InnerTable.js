@@ -1,16 +1,30 @@
-import {Box, Checkbox, Collapse, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material'
-import React from 'react'
-import Info from './Info/Info'
+import {
+  Box,
+  Checkbox,
+  Collapse,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from "@mui/material";
+import React from "react";
+import Info from "./Info/Info";
 
 const InnerTable = (props) => {
-  const {open, row, sortRequest, order, orderBy, tests} = props;
+  const { open, row, sortRequest, order, orderBy, tests } = props;
+  console.log(row);
   return (
     <>
-      <TableRow sx={{background: '#F2F2F2'}}>
-        <TableCell style={{paddingBottom: 0, paddingTop: 0, borderBottom: 0}} colSpan={8}>
+      <TableRow sx={{ background: "#F2F2F2" }}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 0 }}
+          colSpan={8}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{margin: 1}}>
-              <Info name={row.name} id={row.id}/>
+            <Box sx={{ margin: 1 }}>
+              <Info name={row.name} id={row.id} />
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
@@ -21,15 +35,20 @@ const InnerTable = (props) => {
                     <TableCell>Total Q-ns</TableCell>
                     <TableCell>Exp. Speed</TableCell>
                     <TableCell>Concept</TableCell>
-                    <TableCell sortDirection={orderBy === 'date' ? order : false}>
+                    <TableCell
+                      sortDirection={orderBy === "date" ? order : false}
+                    >
                       <TableSortLabel
-                        active={orderBy === 'date'}
-                        direction={orderBy === 'date' ? order : 'asc'}
-                        onClick={() => sortRequest('date')}>
+                        active={orderBy === "date"}
+                        direction={orderBy === "date" ? order : "asc"}
+                        onClick={() => sortRequest("date")}
+                      >
                         Date
-                        {orderBy === 'date' ? (
-                          <Box component="span" sx={{display: 'none'}}>
-                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                        {orderBy === "date" ? (
+                          <Box component="span" sx={{ display: "none" }}>
+                            {order === "desc"
+                              ? "sorted descending"
+                              : "sorted ascending"}
                           </Box>
                         ) : null}
                       </TableSortLabel>
@@ -38,57 +57,95 @@ const InnerTable = (props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tests.map((test) => (
-                    <TableRow key={row.id} sx={{...test.absent && {color: '#C0C0C0'}}}
-                              sortDirection={orderBy === test.id ? order : false}>
-                      <TableCell sx={{color: 'inherit'}}>{test.id}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.label}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.score}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.speed}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.totalQuations}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.expectedSpeed}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.concept}</TableCell>
-                      <TableCell sx={{color: 'inherit'}}>{test.date}</TableCell>
+                  {tests.map((test, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ ...(test.absent && { color: "#C0C0C0" }) }}
+                      sortDirection={orderBy === test.id ? order : false}
+                    >
+                      <TableCell sx={{ color: "inherit" }}>{test.id}</TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.tests[0].label}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.tests[0].score}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.tests[0].speed}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.tests[0].total}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.tests[0].expSpeed}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.concept}
+                      </TableCell>
+                      <TableCell sx={{ color: "inherit" }}>
+                        {test.date}
+                      </TableCell>
                       <TableCell>
-                        <Checkbox
-                          color="default"
-                          checked={test.absent}
-                        />
+                        <Checkbox color="default" checked={test.absent} />
                       </TableCell>
                     </TableRow>
                   ))}
                   <TableRow>
-                    <TableCell sx={{borderBottom: 0}}/>
-                    <TableCell sx={{
-                      padding: '20px 16px',
-                      fontWeight: 700,
-                      borderBottom: 0,
-                      textTransform: 'uppercase',
-                      color: "#777777",
-                      fontSize: 14,
-                      lineHeight: '20px'
-                    }}>Average</TableCell>
-                    <TableCell sx={{
-                      fontWeight: 700,
-                      borderBottom: 0,
-                      textTransform: 'uppercase',
-                      color: row.avScore < 50 ? "#DB4437" : row.avScore < 80 ? "#E2B534" : row.avScore < 90 ? "#0F9D58" : "#4285F4",
-                      fontSize: 14,
-                      lineHeight: '20px'
-                    }}>{row.avScore}%</TableCell>
-                    <TableCell sx={{
-                      fontWeight: 700,
-                      borderBottom: 0,
-                      textTransform: 'uppercase',
-                      color: row.avSpeed === "Below Expected" ? "#DB4437" : row.avSpeed === "As Expected" ? "#0F9D58" : "#4285F4",
-                      whiteSpace: 'break-spaces',
-                      fontSize: 14,
-                      lineHeight: '20px'
-                    }}>{row.avSpeed}</TableCell>
-                    <TableCell sx={{borderBottom: 0}}/>
-                    <TableCell sx={{borderBottom: 0}}/>
-                    <TableCell sx={{borderBottom: 0}}/>
-                    <TableCell sx={{borderBottom: 0}}/>
+                    <TableCell sx={{ borderBottom: 0 }} />
+                    <TableCell
+                      sx={{
+                        padding: "20px 16px",
+                        fontWeight: 700,
+                        borderBottom: 0,
+                        textTransform: "uppercase",
+                        color: "#777777",
+                        fontSize: 14,
+                        lineHeight: "20px",
+                      }}
+                    >
+                      Average
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontWeight: 700,
+                        borderBottom: 0,
+                        textTransform: "uppercase",
+                        color:
+                          row.avScore < 50
+                            ? "#DB4437"
+                            : row.avScore < 80
+                            ? "#E2B534"
+                            : row.avScore < 90
+                            ? "#0F9D58"
+                            : "#4285F4",
+                        fontSize: 14,
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {row.avScore}%
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontWeight: 700,
+                        borderBottom: 0,
+                        textTransform: "uppercase",
+                        color:
+                          row.avSpeed === "Below Expected"
+                            ? "#DB4437"
+                            : row.avSpeed === "As Expected"
+                            ? "#0F9D58"
+                            : "#4285F4",
+                        whiteSpace: "break-spaces",
+                        fontSize: 14,
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {row.score}
+                    </TableCell>
+                    <TableCell sx={{ borderBottom: 0 }} />
+                    <TableCell sx={{ borderBottom: 0 }} />
+                    <TableCell sx={{ borderBottom: 0 }} />
+                    <TableCell sx={{ borderBottom: 0 }} />
                   </TableRow>
                 </TableBody>
               </Table>
@@ -96,10 +153,8 @@ const InnerTable = (props) => {
           </Collapse>
         </TableCell>
       </TableRow>
-
-
     </>
-  )
-}
+  );
+};
 
-export default InnerTable
+export default InnerTable;

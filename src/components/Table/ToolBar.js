@@ -49,9 +49,9 @@ const ToolBar = (props) => {
   );
 }
 
-ToolBar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+// ToolBar.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+// };
 
 
 export default ToolBar
