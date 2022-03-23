@@ -1,4 +1,5 @@
 .header {
+  font-family: inherit;
   display: flex;
   justify-content: space-between;
   height: 60px;
@@ -23,6 +24,7 @@
 
 .header_nav button {
   color: #777777;
+  font-family: inherit;
   text-transform: uppercase;
   text-align: center;
   padding: 6px 12px;
@@ -36,7 +38,7 @@
 }
 
 .header_nav button:focus {
-  background-color: #A6192E;
+  background-color: #a6192e;
   color: white;
   font-weight: 700;
 }

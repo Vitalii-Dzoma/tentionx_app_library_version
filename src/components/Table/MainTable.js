@@ -11,6 +11,7 @@ import Pagination from "./Pagination/Pagination";
 import Row from "./Row";
 import CollapsibleTable from "./TableHead";
 import ToolBar from "./ToolBar";
+import Loader from "../Loader/Loader";
 import { getAllStudents } from "../../services/api";
 import { fetchData } from "../../services/api";
 
@@ -22,12 +23,13 @@ const MainTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [students, setStudents] = useState(null);
 
   const getStudents = useCallback(async () => {
+    setLoading(true);
     try {
       const result = await getAllStudents();
       setRows(result);
+      setLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -49,16 +51,6 @@ const MainTable = () => {
       console.log(e);
     }
   }, []);
-
-  // const formSubmitHandler = (search) => {
-  //   setPage(1);
-  //   setLoading(true);
-  //   fetchData(search, page)
-  //     .then((data) => setRows(data.data))
-  //     .finally(() => setLoading(false));
-
-  //   return rows;
-  // };
 
   const handleRequestSort = (e, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -119,15 +111,20 @@ const MainTable = () => {
   return (
     <>
       {selected.length > 0 ? (
-        <ToolBar numSelected={selected.length} setSelected={setSelected} />
+        <ToolBar
+          numSelected={selected.length}
+          setSelected={setSelected}
+          rows={rows}
+        />
       ) : (
-        <SearchField onSubmit={formSubmitHandler} />
+        <SearchField onSubmit={formSubmitHandler} rows={rows} />
       )}
       <TableContainer
         component={Paper}
         sx={{ padding: "0 40px", maxWidth: "calc(100% - 80px)" }}
       >
         <Table aria-label="collapsible table" size="small">
+          {loading && <Loader style={{ margin: "0 auto" }} />}
           <CollapsibleTable
             onSelectAllClick={handleSelectAllClick}
             order={order}
@@ -136,26 +133,44 @@ const MainTable = () => {
             rowCount={rows.length}
             onRequestSort={handleRequestSort}
           />
-          {rows
-            .sort(getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => {
-              const isItemSelected = isSelected(row.id);
-              const labelId = `enhanced-table-checkbox-${index}`;
-              return (
-                <Row
-                  key={index}
-                  row={row}
-                  isItemSelected={isItemSelected}
-                  handleClick={handleClick}
-                  labelId={labelId}
-                  order={order}
-                  orderBy={orderBy}
-                  handleRequestSort={handleRequestSort}
-                  rows={rows}
-                />
-              );
-            })}
+          {rows.length > 1
+            ? rows
+                .sort(getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.id);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+                  return (
+                    <Row
+                      key={index}
+                      row={row}
+                      isItemSelected={isItemSelected}
+                      handleClick={handleClick}
+                      labelId={labelId}
+                      order={order}
+                      orderBy={orderBy}
+                      handleRequestSort={handleRequestSort}
+                      rows={rows}
+                    />
+                  );
+                })
+            : rows.sort(getComparator(order, orderBy)).map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (
+                  <Row
+                    key={index}
+                    row={row}
+                    isItemSelected={isItemSelected}
+                    handleClick={handleClick}
+                    labelId={labelId}
+                    order={order}
+                    orderBy={orderBy}
+                    handleRequestSort={handleRequestSort}
+                    rows={rows}
+                  />
+                );
+              })}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />

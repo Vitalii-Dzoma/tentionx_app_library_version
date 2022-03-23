@@ -1,12 +1,17 @@
+@font-face {
+  font-family: "Rubik", sans-serif;
+  src: url("/src/fonts/Rubik-Italic-VariableFont_wght.ttf") format("ttf"),
+    url("/src/fonts/Rubik-VariableFont_wght.ttf") format("ttf");
+}
 * {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 14px;
   line-height: 19.6px;
 }
 
 .MuiAppBar-root.MuiAppBar-colorPrimary {
   color: grey;
-  background-color: aliceblue ;
+  background-color: aliceblue;
 }
 
 .MuiSelect-select.MuiSelect-select {
@@ -14,10 +19,11 @@
   color: grey;
   background: transparent;
   font-weight: 700;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-.MuiInput-underline:before, .MuiInput-underline:after  {
+.MuiInput-underline:before,
+.MuiInput-underline:after {
   border-bottom: transparent !important;
 }
 
