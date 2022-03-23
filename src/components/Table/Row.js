@@ -39,7 +39,7 @@ const Row = (props) => {
     }
     setOpen(!open);
   };
-  console.log(tests);
+
   return (
     <>
       <TableRow

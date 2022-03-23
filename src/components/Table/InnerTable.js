@@ -14,7 +14,6 @@ import Info from "./Info/Info";
 
 const InnerTable = (props) => {
   const { open, row, sortRequest, order, orderBy, tests } = props;
-  console.log(row);
   return (
     <>
       <TableRow sx={{ background: "#F2F2F2" }}>

@@ -12,27 +12,53 @@ import Row from "./Row";
 import CollapsibleTable from "./TableHead";
 import ToolBar from "./ToolBar";
 import { getAllStudents } from "../../services/api";
+import { fetchData } from "../../services/api";
 
 const MainTable = () => {
   const [selected, setSelected] = useState([]);
   const [order, setOrder] = useState("ask");
   const [orderBy, setOrderBy] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [students, setStudents] = useState(null);
 
   const getStudents = useCallback(async () => {
     try {
       const result = await getAllStudents();
-
       setRows(result);
     } catch (e) {
       console.log(e);
     }
   }, []);
+
   useEffect(() => {
     getStudents();
-  }, [getStudents]);
+  }, []);
+
+  const formSubmitHandler = useCallback(async (search) => {
+    setPage(1);
+    setLoading(true);
+    try {
+      const result = await fetchData(search, page);
+      console.log(result);
+      setRows(result);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  // const formSubmitHandler = (search) => {
+  //   setPage(1);
+  //   setLoading(true);
+  //   fetchData(search, page)
+  //     .then((data) => setRows(data.data))
+  //     .finally(() => setLoading(false));
+
+  //   return rows;
+  // };
 
   const handleRequestSort = (e, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -95,7 +121,7 @@ const MainTable = () => {
       {selected.length > 0 ? (
         <ToolBar numSelected={selected.length} setSelected={setSelected} />
       ) : (
-        <SearchField />
+        <SearchField onSubmit={formSubmitHandler} />
       )}
       <TableContainer
         component={Paper}
@@ -118,6 +144,7 @@ const MainTable = () => {
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
                 <Row
+                  key={index}
                   row={row}
                   isItemSelected={isItemSelected}
                   handleClick={handleClick}

@@ -14,7 +14,16 @@ const getStudentsTests = async (id) => {
   return data;
 };
 
-export { getAllStudents, getStudentsTests };
+const fetchData = async (searchValue, page) => {
+  const response = await fetch(
+    `https://test-task-j.herokuapp.com/data?page=${page}&size=20&search=${searchValue}`
+  );
+  const data = await response.json();
+
+  return data.data;
+};
+
+export { getAllStudents, getStudentsTests, fetchData };
 
 // export const fetchData = async (searchValue, page = 1) => {
 //   const response = await fetch(
